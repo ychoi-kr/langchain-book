@@ -1,73 +1,37 @@
-# ChatGPT、LangChain によるチャットシステム構築［実践］入門
+# ChatGPT LangChain 챗시스템 구축 실전 입문(가제) 예제 코드
 
-「ChatGPT、LangChain によるチャットシステム構築［実践］入門」の GitHub リポジトリです。
+## 장절별 예제 코드
 
-https://www.amazon.co.jp/dp/4297138395
+| 장                                                                  | 소스 코드                                                                                                                                                            |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 3장 ChatGPT에서 API를 활용 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ychoi-kr/chatgpt-langchain/blob/main/chapter3/notebook.ipynb) |
+| 4장 랭체인 기초 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ychoi-kr/chatgpt-langchain/blob/main/chapter4/notebook.ipynb) |
+| 5장 랭체인 활용 - Data connection | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/ychoi-kr/chatgpt-langchain/blob/main/chapter5/5_1_Data_connection.ipynb) |
+| 5장 랭체인 활용 - Agents | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/ychoi-kr/chatgpt-langchain/blob/main/chapter5/5_2_Agents.ipynb) |
+| 6장 외부 검색, 히스토리를 기반으로 응답하는 웹 앱 구현 | [완성된 소스코드는 여기](./chapter6/) |
+| 7장 스트림 형식으로 히스토리를 기반으로 응답하는 슬랙 앱 구현 | [완성된 소스코드는 여기](./chapter7/) |
+| 8장 사내 문서에 응답하는 슬랙 앱 구현하기 | [완성된 소스코드는 여기](./chapter8/) |
 
-> [!IMPORTANT]
-> LangChain v0.1 に対応したソースコードを [langchain-v0.1 ブランチ](https://github.com/yoshidashingo/langchain-book/tree/langchain-v0.1) に追加しました。
-> 詳細は [updates.md](./updates.md) を参照してください。
+6장부터 8장까지의 각 절의 소스 코드는 [details](. /details) 디렉터리 아래에서 확인할 수 있습니다.
 
-> [!WARNING]
-> 本書で使用しているパッケージは非常にアップデートが激しいため、バージョンの違いに起因するエラーに遭遇する可能性があります。
-> とくに `pip install` でパッケージをインストールする際は、動作確認済みのバージョンを使用するようにしてください。
-> 具体的なコマンドは「[パッケージのバージョン固定に関する変更](errata.md#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E5%9B%BA%E5%AE%9A%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E5%A4%89%E6%9B%B4)」を参照してください。
+## 작동 확인 환경
 
-> [!WARNING]
-> 本書の一部で使用しているパッケージ「duckduckgo-search」のバージョン 3.8.5 が 2023 年 12 月頃から動作しなくなりました。
-> （使用すると `HTTPError` というエラーが発生します）
-> バージョン 4.1.0 は動作することを確認できたので、duckduckgo-search はバージョン 4.1.0 を使用してください。
-> なお、このリポジトリで公開している Google Colab の該当箇所や requirements.txt は更新済みです。
+이 책의 소스코드는 다음과 같은 환경과 버전에서 작동을 확인했습니다.
 
-> [!WARNING]
-> 本書の第 5 章で使用している chromadb v0.4.10 を使う際は、pydantic のバージョンに注意する必要があります。具体的な対応方法は [第 5 章の Google Colab](./chapter5/notebook.ipynb) に記載してあります。
-
-## 各章のソースコード
-
-> [!NOTE]
-> ここに掲載しているのは、書籍執筆時点のソースコードです。
-> LangChain v0.1 に対応したソースコードについては [updates.md](./updates.md) を参照してください。
-
-| 章                                                                  | ソースコード                                                                                                                                                                          |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 第 3 章 ChatGPT を API から利用するために                           | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yoshidashingo/langchain-book/blob/main/chapter3/notebook.ipynb) |
-| 第 4 章 LangChain の基礎                                            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yoshidashingo/langchain-book/blob/main/chapter4/notebook.ipynb) |
-| 第 5 章 LangChain の活用                                            | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yoshidashingo/langchain-book/blob/main/chapter5/notebook.ipynb) |
-| 第 6 章 外部検索、履歴を踏まえた応答をする Web アプリの実装         | [完成するソースコードはこちら](./chapter6/)                                                                                                                                           |
-| 第 7 章 ストリーム形式で履歴を踏まえた応答をする Slack アプリの実装 | [完成するソースコードはこちら](./chapter7/)                                                                                                                                           |
-| 第 8 章 社内文書に答える Slack アプリの実装                         | [完成するソースコードはこちら](./chapter8/)                                                                                                                                           |
-|                                                                     |
-
-第 6 章から第 8 章の各節時点のソースコードは [details](./details) ディレクトリ以下を参照してください。
-
-## 動作確認環境
-
-本書のソースコードは以下の環境・バージョンで動作確認しました。
-
-| 章               | 環境                        | Python  | LangChain |
+| 장               | 환경                        | 파이썬  | 랭체인 |
 | ---------------- | --------------------------- | ------- | --------- |
-| 第 3 章〜第 5 章 | Google Colab                | 3.10.12 | 0.0.292   |
-| 第 6 章〜第 8 章 | AWS Cloud9 (Amazon Linux 2) | 3.10.13 | 0.0.292   |
+| 3~5장 | 구글 코랩                | 3.10.12 | 0.1.14 |
+| 6~8장 | AWS Cloud9 (Amazon Linux 2) | 3.10.13 | 0.0.292   |
 
-その他の Python パッケージの動作確認済みバージョンは、各章のディレクトリの requirements.txt (または requirements-dev.txt) を参照してください。
+그 외의 파이썬 패키지의 작동이 확인된 버전은 각 장의 디렉토리에 있는 requirements.txt(또는 requirements-dev.txt)를 참고합니다.
 
-第 7 章・第 8 章のソースコードのデプロイに使用した Serverless Framework とそのプラグインは、以下のバージョンで動作確認しました。
+7장, 8장의 소스코드 배포에 사용한 Serverless Framework와 그 플러그인은 다음 버전에서 작동을 확인했습니다.
 
 - serverless@3.35.2
 - serverless-python-requirements@6.0.0
 - serverless-dotenv-plugin@6.0.0
 
-## 書籍の誤り・エラーについて
-
-書籍の誤り（誤字など）や、発生したエラーについては、GitHub の Issue からご連絡ください。
-
-https://github.com/yoshidashingo/langchain-book/issues
-
-## 正誤表
-
-[正誤表](./errata.md)
-
-## リンク
-
-- [技術評論社](https://gihyo.jp/book/2023/978-4-297-13839-4)
-- [Amazon.co.jp](https://www.amazon.co.jp/dp/4297138395)
+## 원서
+- 제목: 「ChatGPT、LangChain によるチャットシステム構築［実践］入門」
+- 홈페이지: https://gihyo.jp/book/2023/978-4-297-13839-4
+- 깃허브: https://github.com/yoshidashingo/langchain-book
