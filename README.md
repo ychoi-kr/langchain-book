@@ -6,8 +6,8 @@
 | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 3장 ChatGPT에서 API를 활용 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ychoi-kr/chatgpt-langchain/blob/main/chapter3/notebook.ipynb) |
 | 4장 랭체인 기초 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ychoi-kr/chatgpt-langchain/blob/main/chapter4/notebook.ipynb) |
-| 5장 랭체인 활용 - Data connection | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/ychoi-kr/chatgpt-langchain/blob/main/chapter5/5_1_Data_connection.ipynb) |
-| 5장 랭체인 활용 - Agents | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/ychoi-kr/chatgpt-langchain/blob/main/chapter5/5_2_Agents.ipynb) |
+| 5장 랭체인 활용 - Data connection | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ychoi-kr/chatgpt-langchain/blob/main/chapter5/5_1_Data_connection.ipynb) |
+| 5장 랭체인 활용 - Agents | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ychoi-kr/chatgpt-langchain/blob/main/chapter5/5_2_Agents.ipynb) |
 | 6장 외부 검색, 히스토리를 기반으로 응답하는 웹 앱 구현 | [완성된 소스코드는 여기](./chapter6/) |
 | 7장 스트림 형식으로 히스토리를 기반으로 응답하는 슬랙 앱 구현 | [완성된 소스코드는 여기](./chapter7/) |
 | 8장 사내 문서에 응답하는 슬랙 앱 구현하기 | [완성된 소스코드는 여기](./chapter8/) |
