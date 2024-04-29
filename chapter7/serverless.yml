@@ -3,7 +3,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  region: ap-northeast-1
+  region: ap-northeast-2
   stage: dev
   iam:
     role:
