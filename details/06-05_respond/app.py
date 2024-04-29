@@ -9,5 +9,5 @@ if prompt:
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        response = "こんにちは"
+        response = "안녕하세요"
         st.markdown(response)

@@ -1,24 +1,22 @@
 import streamlit as st
+from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 
 st.title("langchain-streamlit-app")
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+history = StreamlitChatMessageHistory()
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+for message in history.messages:
+    st.chat_message(message.type).write(message.content)
 
 prompt = st.chat_input("What is up?")
 
 if prompt:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
     with st.chat_message("user"):
+        history.add_user_message(prompt)
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        response = "こんにちは"
+        response = "안녕하세요"
+        history.add_ai_message(response)
         st.markdown(response)
 
-    st.session_state.messages.append({"role": "assistant", "content": response})
