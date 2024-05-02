@@ -14,7 +14,7 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 @app.event("app_mention")
 def handle_mention(event, say):
     thread_ts = event["ts"]
-    message = re.sub("<@. *>", "", event["text"])
+    message = re.sub("<@.*>", "", event["text"])
 
     llm = ChatOpenAI(
         model_name=os.environ["OPENAI_API_MODEL"],

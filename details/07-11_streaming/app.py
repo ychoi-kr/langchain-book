@@ -49,9 +49,9 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
 def handle_mention(event, say):
     channel = event["channel"]
     thread_ts = event["ts"]
-    message = re.sub("<@. *>", "", event["text"])
+    message = re.sub("<@.*>", "", event["text"])
 
-    result = say("\n\nTyping..." , thread_ts=thread_ts)
+    result = say("\n\nTyping...", thread_ts=thread_ts)
     ts = result["ts"]
 
     callback = SlackStreamingCallbackHandler(channel=channel, ts=ts)

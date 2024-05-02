@@ -2,12 +2,11 @@ import logging
 import os
 import sys
 
-import pinecone
 from dotenv import load_dotenv
-from langchain.document_loaders import UnstructuredPDFLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Pinecone
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.vectorstores import Pinecone
+from langchain_openai import OpenAIEmbeddings
 
 load_dotenv()
 
@@ -16,21 +15,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 def initialize_vectorstore():
-    pinecone.init(
-        api_key=os.environ["PINECONE_API_KEY"],
-        environment=os.environ["PINECONE_ENV"],
-    )
-
     index_name = os.environ["PINECONE_INDEX"]
     embeddings = OpenAIEmbeddings()
     return Pinecone.from_existing_index(index_name, embeddings)
 
-
 if __name__ == "__main__":
     file_path = sys.argv[1]
-    loader = UnstructuredPDFLoader(file_path)
+    loader = PyPDFLoader(file_path)
     raw_docs = loader.load()
     logger.info("Loaded %d documents", len(raw_docs))
 

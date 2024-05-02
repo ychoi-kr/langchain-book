@@ -7,28 +7,32 @@ from datetime import timedelta
 from typing import Any
 
 from add_document import initialize_vectorstore
-from dotenv import load_dotenv
-from langchain.callbacks.base import BaseCallbackHandler
 from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
-from langchain.memory import MomentoChatMessageHistory
-from langchain.schema import LLMResult
+from dotenv import load_dotenv
+from langchain_community.chat_message_histories import MomentoChatMessageHistory
+from langchain_core.callbacks import BaseCallbackHandler
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.outputs import LLMResult
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_openai import ChatOpenAI
 from slack_bolt import App
 from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 from slack_bolt.adapter.socket_mode import SocketModeHandler
+
+
 
 CHAT_UPDATE_INTERVAL_SEC = 1
 
 load_dotenv()
 
-# ログ
+# 로그
 SlackRequestHandler.clear_all_log_handlers()
 logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
-# ボットトークンを使ってアプリを初期化します
+# 봇 토큰과 소켓 모드 핸들러를 사용하여 앱을 초기화
 app = App(
     signing_secret=os.environ["SLACK_SIGNING_SECRET"],
     token=os.environ["SLACK_BOT_TOKEN"],
@@ -44,7 +48,7 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
         self.channel = channel
         self.ts = ts
         self.interval = CHAT_UPDATE_INTERVAL_SEC
-        # 投稿を更新した累計回数カウンタ
+        # 게시글을 업데이트한 누적 횟수 카운터
         self.update_count = 0
 
     def on_llm_new_token(self, token: str, **kwargs) -> None:
@@ -58,12 +62,12 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
             self.last_send_time = now
             self.update_count += 1
 
-            # update_countが現在の更新間隔X10より多くなるたびに更新間隔を2倍にする
+            # update_count가 현재의 업데이트 간격 X10보다 많아질 때마다 업데이트 간격을 2배로 늘림
             if self.update_count / 10 > self.interval:
                 self.interval = self.interval * 2
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> Any:
-        message_context = "OpenAI APIで生成される情報は不正確または不適切な場合がありますが、当社の見解を述べるものではありません。"
+        message_context = "OpenAI API에서 생성되는 정보는 부정확하거나 부적절할 수 있으며, 우리의 견해를 나타내지 않습니다."
         message_blocks = [
             {"type": "section", "text": {"type": "mrkdwn", "text": self.message}},
             {"type": "divider"},
@@ -86,7 +90,7 @@ def handle_mention(event, say):
     thread_ts = event["ts"]
     message = re.sub("<@.*>", "", event["text"])
 
-    # 投稿のキー(=Momentoキー)：初回=event["ts"],2回目以降=event["thread_ts"]
+    # 게시물의 시작(=Momento 키) 표시: 첫 번째는 event["ts"], 두 번째 이후는 event["thread_ts"].
     id_ts = event["ts"]
     if "thread_ts" in event:
         id_ts = event["thread_ts"]
@@ -103,10 +107,10 @@ def handle_mention(event, say):
         streaming=True,
         callbacks=[callback],
     )
-
+    
     qa_chain = RetrievalQA.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-
-    qa_chain.run(message)
+    
+    qa_chain.invoke(message) 
 
 
 def just_ack(ack):
@@ -115,7 +119,8 @@ def just_ack(ack):
 
 app.event("app_mention")(ack=just_ack, lazy=[handle_mention])
 
-# ソケットモードハンドラーを使ってアプリを起動します
+
+# 소켓 모드 핸들러를 사용해 앱을 시작
 if __name__ == "__main__":
     SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
 
@@ -129,7 +134,7 @@ def handler(event, context):
         logger.info("SKIP > x-slack-retry-num: %s", header["x-slack-retry-num"])
         return 200
 
-    # AWS Lambda 環境のリクエスト情報を app が処理できるよう変換してくれるアダプター
+    # AWS Lambda 환경의 요청 정보를 앱이 처리할 수 있도록 변환해 주는 어댑터
     slack_handler = SlackRequestHandler(app=app)
-    # 応答はそのまま AWS Lambda の戻り値として返せます
+    # 응답을 그대로 AWS Lambda의 반환 값으로 반환할 수 있다
     return slack_handler.handle(event, context)

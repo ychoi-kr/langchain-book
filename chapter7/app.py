@@ -86,7 +86,7 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
 def handle_mention(event, say):
     channel = event["channel"]
     thread_ts = event["ts"]
-    message = re.sub("<@. *>", "", event["text"])
+    message = re.sub("<@.*>", "", event["text"])
 
     # 게시글 키(=Momento 키): 첫 번째=event["ts"], 두 번째 이후=event["thread_ts"]
     id_ts = event["ts"]
