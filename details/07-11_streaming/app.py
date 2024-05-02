@@ -4,17 +4,18 @@ import time
 from typing import Any
 
 from dotenv import load_dotenv
-from langchain.callbacks.base import BaseCallbackHandler
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import LLMResult
+from langchain_core.callbacks import BaseCallbackHandler
+from langchain_core.outputs import LLMResult 
+from langchain_openai import ChatOpenAI
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
+
 
 CHAT_UPDATE_INTERVAL_SEC = 1
 
 load_dotenv()
 
-# ボットトークンを使ってアプリを初期化します
+# 봇 토큰과 소켓 모드 핸들러를 사용하여 앱을 초기화
 app = App(
     signing_secret=os.environ["SLACK_SIGNING_SECRET"],
     token=os.environ["SLACK_BOT_TOKEN"],
@@ -48,9 +49,9 @@ class SlackStreamingCallbackHandler(BaseCallbackHandler):
 def handle_mention(event, say):
     channel = event["channel"]
     thread_ts = event["ts"]
-    message = re.sub("<@.*>", "", event["text"])
+    message = re.sub("<@. *>", "", event["text"])
 
-    result = say("\n\nTyping...", thread_ts=thread_ts)
+    result = say("\n\nTyping..." , thread_ts=thread_ts)
     ts = result["ts"]
 
     callback = SlackStreamingCallbackHandler(channel=channel, ts=ts)
@@ -60,10 +61,10 @@ def handle_mention(event, say):
         streaming=True,
         callbacks=[callback],
     )
+    
+    llm.invoke(message) 
 
-    llm.predict(message)
 
-
-# ソケットモードハンドラーを使ってアプリを起動します
+# 소켓 모드 핸들러를 사용해 앱을 시작
 if __name__ == "__main__":
     SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
