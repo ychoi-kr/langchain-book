@@ -1,4 +1,4 @@
-# ChatGPT LangChain 챗시스템 구축 실전 입문(가제) 예제 코드
+# 《챗GPT와 랭체인을 활용한 LLM 기반 AI 서비스 앱 개발》 예제 코드
 
 ## 장절별 예제 코드
 
@@ -23,7 +23,7 @@
 | 3~5장 | 구글 코랩                | 3.10.12 | 0.1.14 |
 | 6~8장 | AWS Cloud9 (Amazon Linux 2) | 3.10.14 | 0.1.16   |
 
-그 외의 파이썬 패키지의 작동이 확인된 버전은 각 장의 디렉토리에 있는 requirements.txt(또는 requirements-dev.txt)를 참고합니다.
+그 외의 파이썬 패키지의 작동이 확인된 버전은 각 장의 디렉터리에 있는 requirements.txt(또는 requirements-dev.txt)를 참고합니다.
 
 7장, 8장의 소스코드 배포에 사용한 Serverless Framework와 그 플러그인은 다음 버전에서 작동을 확인했습니다.
 
