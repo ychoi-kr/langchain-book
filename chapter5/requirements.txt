@@ -7,4 +7,4 @@ tiktoken==0.6.0
 chromadb==0.4.24
 langchain-experimental==0.0.56
 langchainhub==0.1.15
-duckduckgo-search==5.2.2
+duckduckgo-search==6.1.0

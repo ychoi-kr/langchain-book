@@ -15,7 +15,7 @@ click==8.1.7
 curl_cffi==0.6.2
 dataclasses-json==0.6.4
 distro==1.9.0
-duckduckgo_search==5.3.0
+duckduckgo-search==6.1.0
 exceptiongroup==1.2.0
 frozenlist==1.4.1
 gitdb==4.0.11
